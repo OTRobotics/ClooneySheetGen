@@ -5,6 +5,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 import json
+from frcapi import FRCAPI
 
 from fields import *
 
@@ -30,7 +31,7 @@ class Sheet:
             self.headers.append(field.get_label())
         self.fields.append(field)
 
-    def _draw_sheet(self, match, pos):
+    def _draw_sheet(self, match, pos, team=None, event=None):
         self.canvas.setFont("OpenSansEmoji", 1)
         filename = str(self.config["filename"]).lower() + "_fields.json"
         if self.first_sheet:
@@ -40,7 +41,7 @@ class Sheet:
 
         y_pos = self.config["marker_size"] + 1.125
         Markers().draw(self.canvas, 0, 0, self.config)
-        header = Header(match, pos)
+        header = Header(match, pos, team, event)
         header_height, scan_info = header.draw(self.canvas, self.config["x_pos"] + self.config["marker_size"], y_pos,
                                                self.config)
         y_pos += header_height
@@ -86,12 +87,22 @@ class Sheet:
             self.first_sheet = False
 
     def _draw_sheets(self):
-        for p in range(0, 6):
-            for m in range(self.config["init_sheet_num"], self.config["num_sheets"] + 1):
-                self._draw_sheet(m, p)
-                self.canvas.showPage()
+        api = FRCAPI(self.config["tba_api"], self.config["frc_api"])
+        schedule = api.getFRCSchedule(self.config["event_code"])
+        eventName = api.getEventName(self.config["event_code"])
+        if schedule is not None:
+            for mNum, stations in schedule.items():
+                for station, team in stations.items():
+                    self._draw_sheet(mNum, station, team, eventName)
+                    self.canvas.showPage()
+        else:
+            for p in range(0, 6):
+                for m in range(self.config["init_sheet_num"], self.config["num_sheets"] + 1):
+                    self._draw_sheet(m, p)
+                    self.canvas.showPage()
             if self.config["spacer_page"]:
                 self.canvas.showPage()
+
         self.canvas.save()
 
     def create_from_json(self, sheet_fields):

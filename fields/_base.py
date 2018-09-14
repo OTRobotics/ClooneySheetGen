@@ -1,7 +1,5 @@
 from abc import abstractmethod
 
-import numpy as np
-
 
 class FieldBase(object):
     SHEET_WIDTH = 8.5
