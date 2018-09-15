@@ -24,7 +24,7 @@ class FRCAPI:
 
     def getEventName(self, event):
         events = self.getFRCEvents("2018/events?eventCode=" + event)
-        if str(events).startswith("Invalid Event Requested"):
+        if str(events).startswith("Invalid Event Requested") or str(events).startswith("401"):
             return None
 
         event = events['Events'][0]
@@ -32,7 +32,7 @@ class FRCAPI:
 
     def getFRCSchedule(self, event):
         schedule = self.getFRCEvents("2018/schedule/" + event + "?tournamentLevel=qual")
-        if str(schedule).startswith("Invalid Event Requested"):
+        if str(schedule).startswith("Invalid Event Requested") or str(schedule).startswith("401"):
             return None
 
         matches = schedule['Schedule']
