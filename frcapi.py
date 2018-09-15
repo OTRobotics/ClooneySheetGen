@@ -20,7 +20,10 @@ class FRCAPI:
         return self.s.get(self.tbaBaseURL + url, headers=self.header).json()
 
     def getFRCEvents(self, url):
-        return self.s.get(self.frcEventsBaseURL + url, headers=self.header).json()
+        req = self.s.get(self.frcEventsBaseURL + url, headers=self.header)
+        if req.status_code == 401:
+            return "401"
+        return req.json()
 
     def getEventName(self, event):
         events = self.getFRCEvents("2018/events?eventCode=" + event)
