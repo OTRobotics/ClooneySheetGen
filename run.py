@@ -7,3 +7,6 @@ if __name__ == "__main__":
     gen = Sheet(config)
     fields = json.load(open("resources/powerup_test_3.json", "r", encoding="utf-8"))
     gen.create_from_json(fields)
+    
+def test_placeholder():
+    pass
