@@ -41,6 +41,7 @@ class Barcode(FieldBase):
 
     def draw(self, canvas, x_pos, y_pos, config):
         binary = str(format(int(self.data), '#0' + str(self._length) + 'b'))[2:][::-1]
+        print(str(self._length) + " " + str(self.data) + " " + binary)
         width = (config['box_size'] + config['barcode_spacing']) * self._length - config['barcode_spacing']
         draw.rectangle(canvas, x_pos - width, y_pos, width, config['box_size'])
         self._iter(canvas, x_pos, y_pos, config, draw.box,

@@ -1,18 +1,5 @@
 [
   {
-    "type":    "Image",
-    "options": {
-      "label":      "Draw the Robot",
-      "width":      2.5,
-      "height":     1.75,
-      "image_path": null,
-      "prev_line":  true,
-      "offset":     3.78,
-      "y_offset":   1.5
-    },
-    "id": "robot_drawing"
-  },
-  {
     "type":    "Divider",
     "options": {
       "label": "Autonomous"

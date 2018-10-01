@@ -89,8 +89,8 @@ class Header(FieldBase):
 
         if self.team is not None:
             team_num_encode = Barcode("-EncodedTeamNumber", int(self.team))
-            team_num_encode_x = barcode_x - 3
-            team_num_encode_y = barcode_y
+            team_num_encode_x = barcode_x
+            team_num_encode_y = barcode_y + barcode.get_height(config) + 0.1
             team_num_encode.set_id("team_number_encoded")
             team_num_encode.draw(canvas, team_num_encode_x, team_num_encode_y, config)
             box_bardcode_info.append({
