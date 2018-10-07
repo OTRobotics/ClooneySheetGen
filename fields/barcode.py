@@ -10,7 +10,7 @@ class Barcode(FieldBase):
         self.label = label
         self.data = data
         self.digits = digits
-        self._length = len(bin(int("9" * self.digits))[2:]) - 3
+        self._length = len(bin(int("9" * self.digits))[2:])
 
     def get_info(self):
         return {

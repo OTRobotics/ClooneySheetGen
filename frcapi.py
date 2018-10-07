@@ -21,7 +21,9 @@ class FRCAPI:
 
     def getFRCEvents(self, url):
         req = self.s.get(self.frcEventsBaseURL + url, headers=self.header)
-        if req.status_code == 401:
+        print (url)
+        if req.status_code >= 400:
+            print(req.status_code)
             return "401"
         return req.json()
 
