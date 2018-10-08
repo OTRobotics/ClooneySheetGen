@@ -32,7 +32,7 @@ class Sheet:
         self.fields.append(field)
 
     def _draw_sheet(self, match, pos, team=None, event=None):
-        print("Generating Sheet for " + str(match) + " - position " + str(pos+1))
+        print("Generating Sheet for " + str(match) + " - position " + str(pos))
         self.canvas.setFont("OpenSansEmoji", 1)
         filename = str(self.config["filename"]).lower() + "_fields.json"
         if self.first_sheet:
