@@ -26,10 +26,13 @@ pipeline {
                 sh "python3 run.py ${params.EVENT_NAME}"
             }
         }
-        stage('Archive') {
+        stage('Upload Sheets to GCS') {
+            environment {
+                GCS_CREDS = credentials('otr-scouting-web-gcloud')
+            }
             steps {
-                echo 'Archiving the build PDF....'
-                archiveArtifacts artifacts: '**.pdf', fingerprint: true
+                sh "/var/jenkins_home/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${env.GCS_CREDS}"
+                sh '/var/jenkins_home/google-cloud-sdk/bin/gsutil cp *.pdf gs://staging.otr-scouting.appspot.com/sheets'
             }
         }
     }
