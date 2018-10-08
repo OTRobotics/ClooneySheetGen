@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh 'pip3 install -r requirements.txt'
                 sh 'python3 run.py' 
                 archiveArtifacts artifacts: '**.pdf', fingerprint: true 
             }
